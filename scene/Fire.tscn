@@ -1,0 +1,62 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/light.png" type="Texture" id=1]
+[ext_resource path="res://assets/fire_1/fire_2.png" type="Texture" id=2]
+[ext_resource path="res://assets/fire_1/fire_3.png" type="Texture" id=3]
+[ext_resource path="res://assets/fire_1/fire_1.png" type="Texture" id=4]
+[ext_resource path="res://scene/LightArea.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scene/ActionArea.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scripts/Light.gd" type="Script" id=7]
+[ext_resource path="res://assets/fire_1/no_fire_1.png" type="Texture" id=8]
+[ext_resource path="res://assets/fire_1/no_fire_2.png" type="Texture" id=9]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "off",
+"speed": 2.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "on",
+"speed": 0.5
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 9.52924
+height = 4.96381
+
+[node name="Fire" type="StaticBody2D" groups=[
+"fire",
+"light",
+]]
+collision_layer = 32768
+collision_mask = 0
+script = ExtResource( 7 )
+
+[node name="Light" type="Light2D" parent="."]
+position = Vector2( 2.57025, 3.11133 )
+texture = ExtResource( 1 )
+texture_scale = 0.12
+color = Color( 1, 0.819608, 0, 1 )
+shadow_enabled = true
+
+[node name="Animation" type="AnimatedSprite" parent="."]
+pause_mode = 2
+frames = SubResource( 1 )
+animation = "off"
+frame = 1
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.347961, 4.52332 )
+shape = SubResource( 2 )
+
+[node name="LightArea" parent="." instance=ExtResource( 5 )]
+
+[node name="ActionArea" parent="." groups=[
+"fire",
+] instance=ExtResource( 6 )]
+scale = Vector2( 1.6, 1.6 )
+[connection signal="ready" from="Animation" to="." method="_on_Animation_ready"]

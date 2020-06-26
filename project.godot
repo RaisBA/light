@@ -1,0 +1,152 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Object",
+"class": "AbstractMoveController",
+"language": "GDScript",
+"path": "res://scripts/movement/AbstractMoveController.gd"
+}, {
+"base": "Object",
+"class": "AbstractWorldGenerator",
+"language": "GDScript",
+"path": "res://scripts/world_generator/AbstractWorldGenerator.gd"
+}, {
+"base": "Object",
+"class": "ActionCollector",
+"language": "GDScript",
+"path": "res://scripts/action/ActionCollector.gd"
+}, {
+"base": "Object",
+"class": "DisableAction",
+"language": "GDScript",
+"path": "res://scripts/action/DisableAction.gd"
+}, {
+"base": "Object",
+"class": "GetFireAction",
+"language": "GDScript",
+"path": "res://scripts/action/GetFireAction.gd"
+}, {
+"base": "Object",
+"class": "GladeWorldGenerator",
+"language": "GDScript",
+"path": "res://scripts/world_generator/GladeWorldGenerator.gd"
+}, {
+"base": "AbstractMoveController",
+"class": "InputMoveController",
+"language": "GDScript",
+"path": "res://scripts/movement/InputMoveController.gd"
+}, {
+"base": "Object",
+"class": "KillAction",
+"language": "GDScript",
+"path": "res://scripts/action/KillAction.gd"
+}, {
+"base": "Object",
+"class": "KillByClickAction",
+"language": "GDScript",
+"path": "res://scripts/action/KillByClick.gd"
+}, {
+"base": "State",
+"class": "MovementState",
+"language": "GDScript",
+"path": "res://scripts/state/MovementState.gd"
+}, {
+"base": "AbstractMoveController",
+"class": "RandomMoveController",
+"language": "GDScript",
+"path": "res://scripts/movement/RandomMoveController.gd"
+}, {
+"base": "Object",
+"class": "State",
+"language": "GDScript",
+"path": "res://scripts/state/State.gd"
+}, {
+"base": "Object",
+"class": "ToggleAction",
+"language": "GDScript",
+"path": "res://scripts/action/ToggleAction.gd"
+} ]
+_global_script_class_icons={
+"AbstractMoveController": "",
+"AbstractWorldGenerator": "",
+"ActionCollector": "",
+"DisableAction": "",
+"GetFireAction": "",
+"GladeWorldGenerator": "",
+"InputMoveController": "",
+"KillAction": "",
+"KillByClickAction": "",
+"MovementState": "",
+"RandomMoveController": "",
+"State": "",
+"ToggleAction": ""
+}
+
+[application]
+
+config/name="Light"
+run/main_scene="res://scene/Menu.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+GeneratorConfig="*res://scripts/world_generator/GeneratorConfig.gd"
+Main="*res://scripts/Main.gd"
+GameProperties="*res://scripts/GameProperties.gd"
+
+[gui]
+
+theme/custom="res://Theme.tres"
+
+[input]
+
+person_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
+ ]
+}
+person_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
+ ]
+}
+person_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"unicode":0,"echo":false,"script":null)
+ ]
+}
+person_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
+ ]
+}
+action={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
+ ]
+}
+pause={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+2d_physics/layer_1="ghost"
+2d_physics/layer_2="boy"
+2d_physics/layer_3="sceleton"
+2d_physics/layer_4="actions"
+2d_physics/layer_11="ligth"
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

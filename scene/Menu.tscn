@@ -1,0 +1,182 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/music/bensound-ofeliasdream.ogg" type="AudioStream" id=1]
+[ext_resource path="res://assets/fonts/8bitlim.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Theme.tres" type="Theme" id=3]
+[ext_resource path="res://scripts/menu/exit_btn.gd" type="Script" id=4]
+[ext_resource path="res://scripts/menu/play_btn.gd" type="Script" id=5]
+[ext_resource path="res://scripts/menu/settings_btn.gd" type="Script" id=6]
+[ext_resource path="res://scripts/menu/configs.gd" type="Script" id=7]
+[ext_resource path="res://scripts/menu/value_edit.gd" type="Script" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 72
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 23
+font_data = ExtResource( 2 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_top = 0.361
+anchor_right = 0.5
+anchor_bottom = 0.605
+margin_left = 17.0
+margin_top = 0.399979
+margin_right = -20.0
+rect_min_size = Vector2( 300, 150 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_right = 835.0
+margin_bottom = 150.0
+
+[node name="actions" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+margin_right = 300.0
+margin_bottom = 150.0
+
+[node name="play_btn" type="Button" parent="MarginContainer/HBoxContainer/actions"]
+margin_right = 300.0
+margin_bottom = 29.0
+rect_min_size = Vector2( 300, 20 )
+theme = ExtResource( 3 )
+button_mask = 3
+text = "Play"
+script = ExtResource( 5 )
+
+[node name="exit_btn" type="Button" parent="MarginContainer/HBoxContainer/actions"]
+margin_top = 33.0
+margin_right = 300.0
+margin_bottom = 62.0
+rect_min_size = Vector2( 300, 20 )
+theme = ExtResource( 3 )
+button_mask = 3
+text = "Exit"
+script = ExtResource( 4 )
+
+[node name="settings_btn" type="Button" parent="MarginContainer/HBoxContainer/actions"]
+margin_top = 66.0
+margin_right = 300.0
+margin_bottom = 95.0
+rect_min_size = Vector2( 300, 20 )
+theme = ExtResource( 3 )
+button_mask = 3
+text = "Exit"
+script = ExtResource( 6 )
+
+[node name="configs" type="VBoxContainer" parent="MarginContainer/HBoxContainer" groups=[
+"config",
+]]
+margin_left = 304.0
+margin_right = 667.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 300, 0 )
+script = ExtResource( 7 )
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/configs"]
+margin_right = 363.0
+margin_bottom = 24.0
+columns = 4
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/configs/GridContainer"]
+margin_right = 91.0
+margin_bottom = 23.0
+theme = ExtResource( 3 )
+text = "World Size"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/configs/GridContainer"]
+margin_left = 95.0
+margin_right = 99.0
+margin_bottom = 24.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/configs/GridContainer"]
+margin_left = 103.0
+margin_right = 226.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/configs/GridContainer/HBoxContainer"]
+margin_right = 45.0
+margin_bottom = 23.0
+theme = ExtResource( 3 )
+text = "width"
+
+[node name="SpinBox" type="SpinBox" parent="MarginContainer/HBoxContainer/configs/GridContainer/HBoxContainer"]
+margin_left = 49.0
+margin_right = 123.0
+margin_bottom = 24.0
+min_value = 1.0
+value = 1.0
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+property = "world_size.x"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/configs/GridContainer"]
+margin_left = 230.0
+margin_right = 363.0
+margin_bottom = 24.0
+
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/configs/GridContainer/HBoxContainer2"]
+margin_right = 55.0
+margin_bottom = 23.0
+theme = ExtResource( 3 )
+text = "height"
+
+[node name="SpinBox2" type="SpinBox" parent="MarginContainer/HBoxContainer/configs/GridContainer/HBoxContainer2"]
+margin_left = 59.0
+margin_right = 133.0
+margin_bottom = 24.0
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+property = "world_size.y"
+
+[node name="Title" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.347
+rect_min_size = Vector2( 500, 200 )
+custom_fonts/font = SubResource( 1 )
+text = "LIGHT"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Music By" type="Label" parent="."]
+anchor_left = 1.01142
+anchor_top = 0.980515
+anchor_right = 1.01142
+anchor_bottom = 0.980515
+margin_left = -302.304
+margin_top = -198.33
+margin_right = -2.30371
+margin_bottom = 1.67017
+rect_min_size = Vector2( 300, 200 )
+custom_fonts/font = SubResource( 2 )
+text = "Music: www.bensound.com"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+autoplay = true

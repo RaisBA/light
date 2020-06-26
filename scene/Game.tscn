@@ -1,0 +1,213 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scene/units/Ghost.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/music/bensound-tomorrow.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Theme.tres" type="Theme" id=3]
+[ext_resource path="res://assets/background.png" type="Texture" id=4]
+[ext_resource path="res://scripts/Game.gd" type="Script" id=6]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends ProgressBar
+
+var total
+
+func _ready():
+	total = GeneratorConfig.boy
+	
+func _process(delta):
+	value = (float(GameProperties.boy_count) / float(total)) * 100.0
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends ProgressBar
+
+var total
+
+func _ready():
+	total = GeneratorConfig.skeleton
+	
+func _process(delta):
+	value = (float(GameProperties.skeleton_count) / float(total)) * 100
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends MarginContainer
+
+func hide():
+	visible = false
+	
+func show():
+	if GameProperties.game_over:
+		$VBoxContainer/resume_btn.visible = false
+	else:
+		$VBoxContainer/resume_btn.visible = true
+	visible = true
+
+func _input(event):
+	if event is InputEventKey && Input.is_action_just_pressed('pause') && !GameProperties.game_over:
+		toggle_pause()
+		
+func toggle_pause():
+	if get_tree().paused:
+		start()
+	else:
+		stop()
+
+func start():
+	get_tree().paused = false
+	hide()
+	
+func stop():
+	get_tree().paused = true
+	show()
+
+func game_over(text: String):
+	$VBoxContainer/Title.text = text
+	$VBoxContainer/Title.visible = true
+	stop()
+
+func restart():
+	Main.goto_scene(\"res://scene/Game.tscn\")
+	start()
+
+
+func _on_menu_btn_button_up():
+	Main.goto_scene(\"res://scene/Menu.tscn\")
+"
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="Node2D" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, 0.500671 )
+texture = ExtResource( 4 )
+
+[node name="world" type="Node2D" parent="."]
+
+[node name="Ghost" parent="." instance=ExtResource( 1 )]
+position = Vector2( -12.2827, 26.087 )
+scale = Vector2( 1, 1 )
+
+[node name="Camera2D" type="Camera2D" parent="Ghost"]
+current = true
+
+[node name="Darkness" type="CanvasModulate" parent="."]
+color = Color( 0.529412, 0.529412, 0.529412, 1 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+pause_mode = 2
+
+[node name="Game Info" type="MarginContainer" parent="UI"]
+margin_right = 344.0
+margin_bottom = 74.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="UI/Game Info"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 324.0
+margin_bottom = 70.0
+
+[node name="MarginContainer" type="HBoxContainer" parent="UI/Game Info/VBox"]
+margin_right = 304.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 200, 15 )
+
+[node name="Label" type="Label" parent="UI/Game Info/VBox/MarginContainer"]
+margin_right = 100.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 100, 15 )
+theme = ExtResource( 3 )
+text = "Boys"
+
+[node name="BoyCount" type="ProgressBar" parent="UI/Game Info/VBox/MarginContainer"]
+margin_left = 104.0
+margin_right = 304.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 200, 14 )
+theme = ExtResource( 3 )
+script = SubResource( 1 )
+
+[node name="MarginContainer2" type="HBoxContainer" parent="UI/Game Info/VBox"]
+margin_top = 27.0
+margin_right = 304.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 200, 15 )
+
+[node name="Label2" type="Label" parent="UI/Game Info/VBox/MarginContainer2"]
+margin_right = 100.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 100, 15 )
+theme = ExtResource( 3 )
+text = "Skeletons"
+
+[node name="SkeletonCount" type="ProgressBar" parent="UI/Game Info/VBox/MarginContainer2"]
+margin_left = 104.0
+margin_right = 304.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 200, 14 )
+theme = ExtResource( 3 )
+script = SubResource( 2 )
+
+[node name="Menu" type="MarginContainer" parent="UI"]
+visible = false
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_right = 300.0
+rect_min_size = Vector2( 500, 300 )
+script = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Menu"]
+margin_right = 500.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 400, 200 )
+alignment = 1
+
+[node name="Title" type="Label" parent="UI/Menu/VBoxContainer"]
+visible = false
+margin_top = 252.0
+margin_right = 500.0
+margin_bottom = 275.0
+theme = ExtResource( 3 )
+align = 1
+
+[node name="resume_btn" type="Button" parent="UI/Menu/VBoxContainer"]
+margin_top = 252.0
+margin_right = 500.0
+margin_bottom = 281.0
+rect_min_size = Vector2( 300, 20 )
+theme = ExtResource( 3 )
+text = "Resume"
+
+[node name="restart_btn" type="Button" parent="UI/Menu/VBoxContainer"]
+margin_top = 285.0
+margin_right = 500.0
+margin_bottom = 314.0
+rect_min_size = Vector2( 300, 20 )
+theme = ExtResource( 3 )
+text = "Restart"
+
+[node name="menu_btn" type="Button" parent="UI/Menu/VBoxContainer"]
+margin_top = 318.0
+margin_right = 500.0
+margin_bottom = 347.0
+rect_min_size = Vector2( 300, 20 )
+theme = ExtResource( 3 )
+text = "Menu"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="UI"]
+stream = ExtResource( 2 )
+autoplay = true
+[connection signal="button_up" from="UI/Menu/VBoxContainer/resume_btn" to="UI/Menu" method="start"]
+[connection signal="button_up" from="UI/Menu/VBoxContainer/restart_btn" to="UI/Menu" method="restart"]
+[connection signal="button_up" from="UI/Menu/VBoxContainer/menu_btn" to="UI/Menu" method="_on_menu_btn_button_up"]
