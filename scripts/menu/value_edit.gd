@@ -1,4 +1,6 @@
-extends Range
+extends Node
+
+class_name ValueEdit
 
 export var property: String
 

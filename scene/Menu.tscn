@@ -1,13 +1,23 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/music/bensound-ofeliasdream.ogg" type="AudioStream" id=1]
 [ext_resource path="res://assets/fonts/8bitlim.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Theme.tres" type="Theme" id=3]
 [ext_resource path="res://scripts/menu/exit_btn.gd" type="Script" id=4]
 [ext_resource path="res://scripts/menu/play_btn.gd" type="Script" id=5]
-[ext_resource path="res://scripts/menu/settings_btn.gd" type="Script" id=6]
+[ext_resource path="res://scene/ui/VectorConfig.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scripts/menu/configs.gd" type="Script" id=7]
 [ext_resource path="res://scripts/menu/value_edit.gd" type="Script" id=8]
+[ext_resource path="res://scene/units/Skeleton.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scene/units/Boy.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scene/units/Ghost.tscn" type="PackedScene" id=11]
+
+[sub_resource type="NoiseTexture" id=4]
+
+[sub_resource type="NavigationPolygon" id=3]
+vertices = PoolVector2Array( 1002.03, 583.338, 31.3906, 578.906, 21.5, 435.6, 615.25, 434.65, 1002.03, 445.942, 1002.03, 11.5928, 613.108, 13.8089 )
+polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 5, 4, 3, 6 ) ]
+outlines = [ PoolVector2Array( 21.5, 435.6, 615.25, 434.65, 613.108, 13.8089, 1002.03, 11.5928, 1002.03, 445.942, 1002.03, 583.338, 31.3906, 578.906 ) ]
 
 [sub_resource type="DynamicFont" id=1]
 size = 72
@@ -20,32 +30,61 @@ font_data = ExtResource( 2 )
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -0.950073
+margin_right = -0.950073
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = SubResource( 4 )
+stretch_mode = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Navigation2D" type="Navigation2D" parent="ParallaxBackground"]
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="ParallaxBackground/Navigation2D"]
+navpoly = SubResource( 3 )
+
+[node name="Boy" parent="ParallaxBackground/Navigation2D" instance=ExtResource( 10 )]
+position = Vector2( 644.268, 518.636 )
+
+[node name="Skeleton" parent="ParallaxBackground/Navigation2D" instance=ExtResource( 9 )]
+position = Vector2( 282.102, 523.91 )
+
+[node name="Ghost" parent="ParallaxBackground/Navigation2D" instance=ExtResource( 11 )]
+position = Vector2( 704.674, 257.111 )
+scale = Vector2( 1, 1 )
+speed = 50
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
-anchor_top = 0.361
+anchor_top = 0.396
 anchor_right = 0.5
 anchor_bottom = 0.605
 margin_left = 17.0
-margin_top = 0.399979
-margin_right = -20.0
+margin_top = -20.6
+margin_bottom = 4.0
 rect_min_size = Vector2( 300, 150 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
-margin_right = 835.0
-margin_bottom = 150.0
+[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 578.0
+margin_bottom = 210.0
 
 [node name="actions" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_right = 300.0
-margin_bottom = 150.0
+margin_right = 578.0
+margin_bottom = 62.0
 
 [node name="play_btn" type="Button" parent="MarginContainer/HBoxContainer/actions"]
-margin_right = 300.0
+margin_right = 578.0
 margin_bottom = 29.0
 rect_min_size = Vector2( 300, 20 )
 theme = ExtResource( 3 )
@@ -55,7 +94,7 @@ script = ExtResource( 5 )
 
 [node name="exit_btn" type="Button" parent="MarginContainer/HBoxContainer/actions"]
 margin_top = 33.0
-margin_right = 300.0
+margin_right = 578.0
 margin_bottom = 62.0
 rect_min_size = Vector2( 300, 20 )
 theme = ExtResource( 3 )
@@ -63,87 +102,105 @@ button_mask = 3
 text = "Exit"
 script = ExtResource( 4 )
 
-[node name="settings_btn" type="Button" parent="MarginContainer/HBoxContainer/actions"]
-margin_top = 66.0
-margin_right = 300.0
-margin_bottom = 95.0
-rect_min_size = Vector2( 300, 20 )
-theme = ExtResource( 3 )
-button_mask = 3
-text = "Exit"
-script = ExtResource( 6 )
-
-[node name="configs" type="VBoxContainer" parent="MarginContainer/HBoxContainer" groups=[
+[node name="configs" type="GridContainer" parent="MarginContainer/HBoxContainer" groups=[
 "config",
 ]]
-margin_left = 304.0
-margin_right = 667.0
-margin_bottom = 150.0
+margin_top = 66.0
+margin_right = 578.0
+margin_bottom = 210.0
 rect_min_size = Vector2( 300, 0 )
+columns = 3
 script = ExtResource( 7 )
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/configs"]
-margin_right = 363.0
-margin_bottom = 24.0
-columns = 4
-
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/configs/GridContainer"]
-margin_right = 91.0
-margin_bottom = 23.0
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/configs"]
+margin_top = 5.0
+margin_right = 138.0
+margin_bottom = 28.0
 theme = ExtResource( 3 )
-text = "World Size"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+text = "World size"
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/configs/GridContainer"]
-margin_left = 95.0
-margin_right = 99.0
-margin_bottom = 24.0
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/configs"]
+margin_left = 142.0
+margin_right = 146.0
+margin_bottom = 33.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/configs/GridContainer"]
-margin_left = 103.0
-margin_right = 226.0
-margin_bottom = 24.0
+[node name="WorldSize" parent="MarginContainer/HBoxContainer/configs" instance=ExtResource( 6 )]
+margin_left = 150.0
+margin_right = 578.0
+margin_bottom = 33.0
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/configs/GridContainer/HBoxContainer"]
-margin_right = 45.0
-margin_bottom = 23.0
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/configs"]
+margin_top = 42.0
+margin_right = 138.0
+margin_bottom = 65.0
 theme = ExtResource( 3 )
-text = "width"
+text = "Seed"
 
-[node name="SpinBox" type="SpinBox" parent="MarginContainer/HBoxContainer/configs/GridContainer/HBoxContainer"]
-margin_left = 49.0
-margin_right = 123.0
-margin_bottom = 24.0
+[node name="VSeparator2" type="VSeparator" parent="MarginContainer/HBoxContainer/configs"]
+margin_left = 142.0
+margin_top = 37.0
+margin_right = 146.0
+margin_bottom = 70.0
+
+[node name="Sed" type="SpinBox" parent="MarginContainer/HBoxContainer/configs"]
+margin_left = 150.0
+margin_top = 37.0
+margin_right = 578.0
+margin_bottom = 70.0
+theme = ExtResource( 3 )
+max_value = 2.14748e+09
+script = ExtResource( 8 )
+property = "sed"
+
+[node name="Label3" type="Label" parent="MarginContainer/HBoxContainer/configs"]
+margin_top = 79.0
+margin_right = 138.0
+margin_bottom = 102.0
+theme = ExtResource( 3 )
+text = "Boy Conut"
+
+[node name="VSeparator3" type="VSeparator" parent="MarginContainer/HBoxContainer/configs"]
+margin_left = 142.0
+margin_top = 74.0
+margin_right = 146.0
+margin_bottom = 107.0
+
+[node name="Boy" type="SpinBox" parent="MarginContainer/HBoxContainer/configs"]
+margin_left = 150.0
+margin_top = 74.0
+margin_right = 578.0
+margin_bottom = 107.0
+theme = ExtResource( 3 )
 min_value = 1.0
+max_value = 100.0
 value = 1.0
 script = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-property = "world_size.x"
+property = "boy"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/configs/GridContainer"]
-margin_left = 230.0
-margin_right = 363.0
-margin_bottom = 24.0
-
-[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/configs/GridContainer/HBoxContainer2"]
-margin_right = 55.0
-margin_bottom = 23.0
+[node name="Label4" type="Label" parent="MarginContainer/HBoxContainer/configs"]
+margin_top = 116.0
+margin_right = 138.0
+margin_bottom = 139.0
 theme = ExtResource( 3 )
-text = "height"
+text = "Skeleton Conut"
 
-[node name="SpinBox2" type="SpinBox" parent="MarginContainer/HBoxContainer/configs/GridContainer/HBoxContainer2"]
-margin_left = 59.0
-margin_right = 133.0
-margin_bottom = 24.0
+[node name="VSeparator4" type="VSeparator" parent="MarginContainer/HBoxContainer/configs"]
+margin_left = 142.0
+margin_top = 111.0
+margin_right = 146.0
+margin_bottom = 144.0
+
+[node name="Skeleton" type="SpinBox" parent="MarginContainer/HBoxContainer/configs"]
+margin_left = 150.0
+margin_top = 111.0
+margin_right = 578.0
+margin_bottom = 144.0
+theme = ExtResource( 3 )
+min_value = 1.0
+max_value = 100.0
+value = 1.0
 script = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-property = "world_size.y"
+property = "skeleton"
 
 [node name="Title" type="Label" parent="."]
 anchor_right = 1.0

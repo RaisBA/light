@@ -92,6 +92,11 @@ scale = Vector2( 1, 1 )
 [node name="Camera2D" type="Camera2D" parent="Ghost"]
 current = true
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Ghost"]
+position = Vector2( 12.2827, -26.087 )
+stream = ExtResource( 2 )
+autoplay = true
+
 [node name="Darkness" type="CanvasModulate" parent="."]
 color = Color( 0.529412, 0.529412, 0.529412, 1 )
 
@@ -204,10 +209,6 @@ margin_bottom = 347.0
 rect_min_size = Vector2( 300, 20 )
 theme = ExtResource( 3 )
 text = "Menu"
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="UI"]
-stream = ExtResource( 2 )
-autoplay = true
 [connection signal="button_up" from="UI/Menu/VBoxContainer/resume_btn" to="UI/Menu" method="start"]
 [connection signal="button_up" from="UI/Menu/VBoxContainer/restart_btn" to="UI/Menu" method="restart"]
 [connection signal="button_up" from="UI/Menu/VBoxContainer/menu_btn" to="UI/Menu" method="_on_menu_btn_button_up"]

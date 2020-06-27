@@ -73,6 +73,11 @@ _global_script_classes=[ {
 "class": "ToggleAction",
 "language": "GDScript",
 "path": "res://scripts/action/ToggleAction.gd"
+}, {
+"base": "Node",
+"class": "ValueEdit",
+"language": "GDScript",
+"path": "res://scripts/menu/value_edit.gd"
 } ]
 _global_script_class_icons={
 "AbstractMoveController": "",
@@ -87,7 +92,8 @@ _global_script_class_icons={
 "MovementState": "",
 "RandomMoveController": "",
 "State": "",
-"ToggleAction": ""
+"ToggleAction": "",
+"ValueEdit": ""
 }
 
 [application]
